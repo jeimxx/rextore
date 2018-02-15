@@ -4,7 +4,6 @@ coverage/
 dist/
 lib/
 build/
-examples/
 *.vimrc
 .DS_STORE
 node_modules/

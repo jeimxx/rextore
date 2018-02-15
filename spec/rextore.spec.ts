@@ -1,29 +1,33 @@
 import { expect, should } from 'chai'
-import { createRextore, createRootReducer } from '../src/'
+import { createRextore, createRootReducer, cleanRextore } from '../src/'
 
 describe('Rextore', () => {
-  
+
+  beforeEach(() => {
+    cleanRextore();
+  });
+
   it('Should create a rextore with initial state', () => {
-    
+
     const mockReducer = (state, action) => {
       switch (action.type) {
-        default: 
-        return state
+        default:
+          return state
       }
     }
 
     const rootReducer = createRootReducer({
-      mockReducer 
+      mockReducer
     })
 
-    const initialState = { count: 33}; 
+    const initialState = { count: 33 };
     const rextore = createRextore(initialState, rootReducer)
     const rextoreValue = rextore.getState();
     expect(rextoreValue).to.deep.equal(initialState)
   })
 
   it('Should dispatch an action and reduce the state', () => {
-    
+
     const mockReducer = (state, action) => {
       switch (action.type) {
         case 'INCREMENT':
@@ -31,16 +35,16 @@ describe('Rextore', () => {
             ...state,
             count: ++state.count
           }
-      default: 
-      return state
-    }
+        default:
+          return state
+      }
     }
 
     const rootReducer = createRootReducer({
-      mockReducer 
+      mockReducer
     })
 
-    const initialState = { count: 10}; 
+    const initialState = { count: 10 };
     const rextore = createRextore(initialState, rootReducer)
     rextore.dispatch({ type: 'INCREMENT' })
     rextore.dispatch({ type: 'INCREMENT' })
@@ -51,14 +55,14 @@ describe('Rextore', () => {
   it('should throw Error with incorrect initialState', (done) => {
     const mockReducer = (state, action) => {
       switch (action.type) {
-        default: 
-        return state
+        default:
+          return state
       }
     }
 
     const rootReducer = createRootReducer({
     })
-    
+
     expect(() => createRextore('', rootReducer)).to.throw(Error);
     done();
 
@@ -68,18 +72,18 @@ describe('Rextore', () => {
   it('Should throw Error without rootReducer', (done) => {
     const mockReducer = (state, action) => {
       switch (action.type) {
-        default: 
-        return state
+        default:
+          return state
       }
     }
 
     const rootReducer = createRootReducer({
     })
-    
-    expect(() => createRextore({})).to.throw(Error);
+
+    expect(() => createRextore(null, null)).to.throw(Error);
     done();
 
   });
 
 
-})
+});
